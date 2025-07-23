@@ -1,0 +1,122 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jul 23 13:28:09 2025
+
+@author: zhi yan
+"""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewel Changi FAQ Bot</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        /* (Keep all your existing CSS styles here) */
+        /* ... (paste the full CSS from earlier) ... */
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            Jewel Changi Airport FAQ Assistant
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Ask me anything about Jewel Changi..." autocomplete="off">
+            <button id="sendButton">Send</button>
+        </div>
+    </div>
+    
+    <div class="share-section">
+        <h3>Share this FAQ Bot</h3>
+        <button class="share-btn" onclick="copyLink()">Copy Link</button>
+        <a href="https://api.whatsapp.com/send?text=Check%20out%20this%20Jewel%20Changi%20FAQ%20bot:%20" class="share-btn" target="_blank">Share on WhatsApp</a>
+        <p id="copyStatus" style="color: green; display: none;">Link copied to clipboard!</p>
+    </div>
+
+    <script>
+        // Initialize chatbot
+        const faqBot = new JewelChangiFAQ();
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+
+        // Display welcome message
+        chatMessages.innerHTML = faqBot._welcome_response();
+
+        // Handle send button click
+        sendButton.addEventListener('click', sendMessage);
+        
+        // Handle Enter key press
+        userInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message === '') return;
+            
+            // Add user message to chat
+            chatMessages.innerHTML += `<div class="user-message">${message}</div>`;
+            userInput.value = '';
+            
+            // Get and display bot response
+            setTimeout(() => {
+                const response = faqBot.get_response(message);
+                chatMessages.innerHTML += `<div class="bot-message">${response}</div>`;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 500);
+        }
+
+        function askQuestion(question) {
+            userInput.value = question;
+            sendMessage();
+        }
+
+        function copyLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url);
+            document.getElementById('copyStatus').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('copyStatus').style.display = 'none';
+            }, 2000);
+        }
+
+        // Paste the ENTIRE JewelChangiFAQ class here
+        // (Include all the response methods from earlier)
+        class JewelChangiFAQ {
+            constructor() {
+                this.faq = {
+                    "opening hours": this._opening_hours_response(),
+                    "ticket prices": this._ticket_prices_response(),
+                    /* ... (include all other FAQ entries) ... */
+                };
+            }
+            
+            get_response(user_input) {
+                /* ... (keep the existing method) ... */
+            }
+            
+            _welcome_response() {
+                /* ... (keep the existing method) ... */
+            }
+            
+            _opening_hours_response() {
+                /* ... (keep all response methods) ... */
+            }
+            
+            /* ... (include ALL other methods) ... */
+        }
+    </script>
+</body>
+</html>
